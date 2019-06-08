@@ -89,7 +89,7 @@
     "#endverbatim"
     ))
 
-(defvar vale-tab-width 4 "Width of a tab for VALE mode")
+(defvar vale-tab-width 4 "Width of a tab for VALE mode.")
 
 (defvar vale-font-lock-defaults
   `((
@@ -124,24 +124,28 @@
     (indent-to nexttab)))
 
 (defcustom vale-interact-path nil
-  "Path to Vale's interact.py"
+  "Path to Vale's interact.py."
   :type '(file :must-match t)
   :risky t)
 
 (defun vale--repetitions-1 (v num)
+  "Return a string containing [V] repeated [NUM] times."
   (if (= num 0) ""
     (concat v (vale--repetitions-1 v (- num 1)))))
 
 (defun vale--repetitions (v num)
+  "Return a list consisting of all repetitions of [V] upto [NUM] times."
   (if (= num 0) nil
     (cons (vale--repetitions-1 v num) (vale--repetitions v (- num 1)))))
 
 (defun vale--also-suffix (l suffix)
+  "Each element of [L] is returned also with the [SUFFIX]."
   (cond
    ((null l) nil)
    (t (cons (car l) (cons (concat (car l) suffix) (vale--also-suffix (cdr l) suffix))))))
 
 (defun vale--get-path (fname suffix)
+  "Get path related to the vaf filename (FNAME) such that it ends with [SUFFIX]."
   (let* ((base (file-name-base fname))
          (cwd (file-name-directory fname))
          (expected (concat base suffix)))
@@ -150,7 +154,7 @@
      (vale--also-suffix (append (vale--repetitions "../" 10) '("./")) "obj/"))))
 
 (defun vale-interact ()
-  "Runs the interactive vale tool"
+  "Run the interactive vale tool."
   (interactive)
   (if vale-interact-path
       (let* ((fname (buffer-file-name (current-buffer)))
@@ -175,7 +179,7 @@
            "Run 'M-x customize-variable RET vale-interact-path' to set the path."))))
 
 (defun vale-jump-to-fst ()
-  "Jumps to .fst file corresponding to the .vaf"
+  "Jumps to .fst file corresponding to the .vaf."
   (interactive)
   (let* ((fname (buffer-file-name (current-buffer)))
          (fstarfilepath (vale--get-path fname ".fst")))
@@ -186,7 +190,7 @@
       (message "Could not find corresponding .fst file"))))
 
 (defun vale-create-tags (path)
-  "Creates a TAGS file using etags"
+  "Create a TAGS file at PATH using etags."
   (interactive "DPath to make TAGS file in: ")
   (let* ((args (append
                 '("etags"
