@@ -152,7 +152,6 @@
 (defun vale--get-path (fname suffix)
   "Get path related to the vaf filename (FNAME) such that it ends with [SUFFIX]."
   (let* ((base (file-name-base fname))
-         (cwd (file-name-directory fname))
          (expected (concat base suffix)))
     (locate-file
      expected
