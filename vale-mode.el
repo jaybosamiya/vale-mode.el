@@ -1,4 +1,4 @@
-;;; vale-mode.el -- Major mode for writing Vale vaf files
+;;; vale-mode.el --- Major mode for writing Vale vaf files -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019 Jay Bosamiya
 ;; Author: Jay Bosamiya <jaybosamiya@gmail.com>
@@ -7,6 +7,7 @@
 ;; Created: 7 June 2019
 ;; Version: 0.1
 ;; Keywords: convenience, languages
+;; Package-Requires: ((emacs "25"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -22,6 +23,8 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 
+;;; Commentary:
+
 ;; This file implements support for Vale programming in Emacs, including:
 ;;
 ;; * Syntax highlighting
@@ -29,6 +32,8 @@
 ;; * Jumping to procedure under cursor
 ;;
 ;; See https://github.com/jaybosamiya/vale-mode.el for setup and usage tips.
+
+;;; Code:
 
 (defvar vale-constants
   '(
@@ -227,3 +232,5 @@
   (modify-syntax-entry ?\n "> b" vale-mode-syntax-table))
 
 (provide 'vale-mode)
+
+;;; vale-mode.el ends here
