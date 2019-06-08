@@ -89,8 +89,6 @@
     "#endverbatim"
     ))
 
-(defvar vale-tab-width 4 "Width of a tab for VALE mode.")
-
 (defvar vale-font-lock-defaults
   `((
      ;; NOTE: The order here matters. Once a color is set, it won't be
@@ -131,7 +129,12 @@
   "Path to Vale's interact.py."
   :type '(file :must-match t)
   :risky t
-  :group 'fstar)
+  :group 'vale)
+
+(defcustom vale-tab-width 4
+  "Width of a tab for Vale code."
+  :type 'integer
+  :group 'vale)
 
 (defun vale--repetitions-1 (v num)
   "Return a string containing [V] repeated [NUM] times."
