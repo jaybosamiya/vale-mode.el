@@ -123,10 +123,15 @@
     (delete-horizontal-space t)
     (indent-to nexttab)))
 
+(defgroup vale nil
+  "Vale mode."
+  :group 'languages)
+
 (defcustom vale-interact-path nil
   "Path to Vale's interact.py."
   :type '(file :must-match t)
-  :risky t)
+  :risky t
+  :group 'fstar)
 
 (defun vale--repetitions-1 (v num)
   "Return a string containing [V] repeated [NUM] times."
