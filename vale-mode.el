@@ -180,30 +180,35 @@
      expected
      (vale--also-suffix (append (vale--repetitions "../" 10) '("./")) "obj/"))))
 
+(defun vale--interactive-buffer (fname)
+  "Get the interactive buffer related to FNAME."
+  (if vale-interact-path
+      (let* ((fstarfilepath (vale--get-path fname ".fst"))
+	     (fstarcmd (vale--get-path fname ".fst.checked.cmd"))
+             (valecmd (vale--get-path fname ".fst.cmd")))
+	(if (and fstarfilepath fstarcmd valecmd)
+	    (with-temp-buffer
+	      (cd (string-remove-suffix "obj/" (file-name-directory fstarcmd)))
+	      (make-comint (concat "vale-interact(" (file-name-base fname) ")")
+			   "python3" nil
+			   vale-interact-path
+			   "--fstar-cmd" fstarcmd
+			   "--vale-cmd" valecmd
+			   "--fstar-file" fstarfilepath))
+          (message (concat
+                    "Unable to find files related to this .vaf file. "
+                    "Are you sure they exist? "))
+	  nil))
+    (warn (concat
+           "vale-interact-path not set. "
+           "Run 'M-x customize-variable RET vale-interact-path' to set the path."))
+    nil))
+
 (defun vale-interact ()
   "Run the interactive vale tool."
   (interactive)
-  (if vale-interact-path
-      (let* ((fname (buffer-file-name (current-buffer)))
-             (fstarcmd (vale--get-path fname ".fst.checked.cmd"))
-             (fstarfilepath (vale--get-path fname ".fst"))
-             (valecmd (vale--get-path fname ".fst.cmd")))
-        (if (and fstarfilepath fstarcmd valecmd)
-            (with-temp-buffer
-              (cd (string-remove-suffix "obj/" (file-name-directory fstarcmd)))
-              (switch-to-buffer-other-window
-               (make-comint (concat "vale-interact(" (file-name-base fname) ")")
-                            "python3" nil
-                            vale-interact-path
-                            "--fstar-cmd" fstarcmd
-                            "--vale-cmd" valecmd
-                            "--fstar-file" fstarfilepath)))
-          (message (concat
-                    "Unable to find files related to this .vaf file. "
-                    "Are you sure they exist? "))))
-    (warn (concat
-           "vale-interact-path not set. "
-           "Run 'M-x customize-variable RET vale-interact-path' to set the path."))))
+  (when-let ((buf (vale--interactive-buffer (buffer-file-name (current-buffer)))))
+    (switch-to-buffer-other-window buf)))
 
 (defun vale-jump-to-fst ()
   "Jumps to .fst file corresponding to the .vaf."
