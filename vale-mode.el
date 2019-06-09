@@ -28,6 +28,7 @@
 ;; This file implements support for Vale programming in Emacs, including:
 ;;
 ;; * Syntax highlighting
+;; * Prettification (prettify-symbols-mode)
 ;; * Interactive proving
 ;; * Jumping to procedure under cursor
 ;;
@@ -136,6 +137,25 @@
   :type 'integer
   :group 'vale)
 
+(defcustom vale-symbols-alist
+  '(("old" . ?𝕆)
+    ("nat" . ?ℕ) ("int" . ?ℤ)
+    ("*" . ?×)
+    ("<=" . ?≤) (">=" . ?≥)
+    ("!=" . ?≠)
+    ("&&" . ?∧) ("||" . ?∨)
+    ("==>" . ?⟹) ("<==>" . ?⟺)
+    ("exists" . ?∃) ("forall" . ?∀)
+    (":=" . ?≔)
+    ;; For "@=" use one of these:
+    ;;    ≝ ≞ ≟ ≠ ∹ ≎ ≏ ⪮ ≐ ≑ ≒ ≓ ≔ ≕ ≖ ≗ ≘ ≙ ≚ ≛ ≜ ⩬ ⩭
+    ;;    ⩮ ⩱ ⩲ ⩦ ⩴ ⩵ ⩶ ⩷ ≡ ≢ ⩧ ≍ ≭ ≣ ⩸ ≁ ≂ ≃ ≄ ⋍ ≅ ≆ ≇
+    ;;    ≈ ≉ ≊ ≋ ≌ ⩯ ⩰
+    ("@=" . ?≝))
+  "Vale symbols."
+  :group 'vale
+  :type 'alist)
+
 (defun vale--repetitions-1 (v num)
   "Return a string containing [V] repeated [NUM] times."
   (if (= num 0) ""
@@ -240,7 +260,12 @@
   ;; comments /* */
   (modify-syntax-entry ?\/ ". 14a12b" vale-mode-syntax-table)
   (modify-syntax-entry ?* ". 23a" vale-mode-syntax-table)
-  (modify-syntax-entry ?\n "> b" vale-mode-syntax-table))
+  (modify-syntax-entry ?\n "> b" vale-mode-syntax-table)
+  (when (and (boundp 'prettify-symbols-alist)
+	     (fboundp 'prettify-symbols-mode))
+    (setq-local prettify-symbols-alist (append vale-symbols-alist
+					       prettify-symbols-alist))
+    (prettify-symbols-mode)))
 
 (provide 'vale-mode)
 
