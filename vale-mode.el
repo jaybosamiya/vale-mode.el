@@ -15,7 +15,7 @@
 ;; you may not use this file except in compliance with the License.
 ;; You may obtain a copy of the License at
 ;;
-;; http://www.apache.org/licenses/LICENSE-2.0
+;; https://www.apache.org/licenses/LICENSE-2.0
 ;;
 ;; Unless required by applicable law or agreed to in writing, software
 ;; distributed under the License is distributed on an "AS IS" BASIS,
@@ -210,8 +210,8 @@
       (shell-command-to-string cmd))
     (message "Finished making TAGS file")))
 
-(define-derived-mode vale-mode fundamental-mode "VALE"
-  "VALE mode is a major mode for editing VALE files"
+(define-derived-mode vale-mode prog-mode "Vale"
+  "Vale mode is a major mode for editing Vale files"
   (setq-local font-lock-defaults vale-font-lock-defaults)
   (when vale-tab-width
     (setq-local tab-width vale-tab-width)
