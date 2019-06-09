@@ -208,6 +208,10 @@
   "Run the interactive vale tool."
   (interactive)
   (when-let ((buf (vale--interactive-buffer (buffer-file-name (current-buffer)))))
+    (when-let ((procedure-point
+		(save-excursion
+		  (search-backward-regexp "procedure \\_<\\([^ ]*?\\)\\_>" nil t nil))))
+      (comint-send-string buf (concat "v " (match-string 1))))
     (switch-to-buffer-other-window buf)))
 
 (defun vale-jump-to-fst ()
