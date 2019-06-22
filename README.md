@@ -6,7 +6,7 @@ Adds support for editing [Vale](https://github.com/project-everest/vale/) (Verif
 
 Vale Mode requires Emacs 25 or newer.
 
-**AFTER ADDED TO MELPA** It is distributed through [MELPA](https://melpa.org).
+It is distributed through [MELPA](https://melpa.org).
 
 1.  Add the following to your init file (usually `.emacs`) if it is not already there:
 
