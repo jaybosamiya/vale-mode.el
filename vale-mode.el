@@ -36,6 +36,9 @@
 
 ;;; Code:
 
+(require 'subr-x)
+(require 'comint)
+
 (defvar vale-constants
   '(
     "false"
