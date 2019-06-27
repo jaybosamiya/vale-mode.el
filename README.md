@@ -25,6 +25,30 @@ It is distributed through [MELPA](https://melpa.org).
 	```
 4. To be able to quickly jump around between procedures, make sure to have `etags` on your path.
 
+## Alternate setup using `use-package`
+
+`use-package` makes your init file configuration extremely tidy, and also makes it easy to ensure that all the packages you want are automatically installed when on a new machine.
+
+Use the following code in your init file to ensure that you've got `use-package` (after the `(package-initialize)`):
+
+```elisp
+(eval-when-compile
+  (or (require 'use-package nil t)
+      (progn
+	(package-refresh-contents)
+	(package-install 'use-package)
+        (message "On a new system. Just installed use-package!"))))
+```
+
+Now, you can install `vale-mode` simply by using the following declaration in your init file:
+
+```elisp
+(use-package vale-mode
+  :ensure t
+  :custom
+  (vale-interact-path "/PATH/TO/interact.py")
+  :mode ("\\.vaf\\'" . vale-mode))
+```
 
 ## Keybindings
 
