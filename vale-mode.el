@@ -109,7 +109,7 @@
      ;; Constants
      ( ,(regexp-opt vale-constants 'symbols) . font-lock-constant-face)
      ("\\_<\\([0-9]+\\)\\_>" . font-lock-constant-face)
-     ("\\_<\\(0[xX][0-9]+\\)\\_>" . font-lock-constant-face)
+     ("\\_<\\(0[xX][0-9a-fA-F]+\\)\\_>" . font-lock-constant-face)
 
      ;; Definitions/Declarations
      ("procedure \\_<\\([^ ]*?\\)\\_>" . (1 font-lock-function-name-face))
