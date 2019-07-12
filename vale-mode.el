@@ -48,6 +48,7 @@
 (defvar vale-keywords
   '(
     "assert"
+    "assume"
     "calc"
     "const"
     "decreases"
