@@ -104,6 +104,9 @@
      ( ,(concat (regexp-opt vale-directives nil) ".*$") . font-lock-preprocessor-face)
      ( "{:.*?}" . font-lock-preprocessor-face)
 
+     ;; Strings
+     ( "\"\\([^\"\\]\\|\\\\\"\\)*?\"" . font-lock-string-face)
+
      ;; Keywords
      ( ,(regexp-opt vale-keywords 'symbols) . font-lock-keyword-face)
 
@@ -277,8 +280,8 @@ If in a procedure, then start verification of that procedure."
   ;; Operators should be counted as punctuation
   (dolist (c (string-to-list "/*%+-<=>|&"))
     (modify-syntax-entry c "." vale-mode-syntax-table))
-  ;; strings won't be showing up in vale code except in directives
-  (modify-syntax-entry ?\" "w" vale-mode-syntax-table)
+  ;; Consider quotes to be punctuation
+  (modify-syntax-entry ?\" "." vale-mode-syntax-table)
   ;; comments /* */
   (modify-syntax-entry ?\/ ". 14a12b" vale-mode-syntax-table)
   (modify-syntax-entry ?* ". 23a" vale-mode-syntax-table)
